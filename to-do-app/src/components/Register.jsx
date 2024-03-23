@@ -5,8 +5,8 @@ import axios from '../api/axios'
 //import {faCheck} from "@fontawesome/free-solid-svg-icons"
 //import {FontAwesomeIcon} from "@fontawesome/react-fontawesome";
 
-//Havent installed style dependencies, its servers down
-//Have to add validation for the @
+//Havent installed style dependencies, FontAwesome its servers down
+//Add connection to NEST
 
 //letters a/A to-zZ, -_ and length 4-24 added the @ in user
 const userRegx = /^[a-zA-Z][a-zA-Z0-9-_@]{3,23}$/;

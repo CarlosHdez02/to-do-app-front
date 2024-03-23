@@ -1,6 +1,6 @@
 import './App.css'
 import Register from './components/Register'
-
+import Login from './components/Login'
 
 function App() {
  
@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <main className=''></main>
-      <Register/>
+      <Login/>
     </>
   )
 }
