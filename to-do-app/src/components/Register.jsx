@@ -6,10 +6,10 @@ import axios from '../api/axios'
 //import {FontAwesomeIcon} from "@fontawesome/react-fontawesome";
 
 //Havent installed style dependencies, FontAwesome its servers down
-//Add connection to NEST
+//Add connection to
 
 //letters a/A to-zZ, -_ and length 4-24 added the @ in user
-const userRegx = /^[a-zA-Z][a-zA-Z0-9-_@]{3,23}$/;
+const userRegx = /^[a-zA-Z][a-zA-Z0-9-_@.]{3,23}$/;
 
 const pwdRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const registerUrl = './register'
@@ -213,7 +213,7 @@ const Register = ()=>{
                 Registrado?<br />
                 <span className="line">
                     {/*}Router Link {*/}
-                    <a href="#">Iniciar sesion</a>
+                    <a href="/login">Iniciar sesion</a>
                 </span>
             </p>
         </section>

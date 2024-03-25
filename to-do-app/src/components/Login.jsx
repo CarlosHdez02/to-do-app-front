@@ -99,7 +99,7 @@ const Login = ()=>{
                     Necesitas una cuenta? <br />
                     <span className='line'>
                         {/*} React router link{*/}
-                        <a href="#">Crear cuenta</a>
+                        <a href="/register">Crear cuenta</a>
                     </span>
                 </p>
         </section>

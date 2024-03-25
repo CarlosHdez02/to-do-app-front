@@ -12,7 +12,7 @@ function App() {
 
   return (
     <>
-    <h1>App page</h1>
+    
      <Routes>
       <Route path="/" element={<Layout/>}>
       {/*  Routes*/}
