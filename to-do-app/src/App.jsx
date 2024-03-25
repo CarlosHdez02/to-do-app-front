@@ -7,6 +7,7 @@ import Tasks from './components/Tasks'
 import Layout from './components/Layout'
 import Missing from './components/Missing'
 import RequireAuth from './components/RequiredAuth'
+import PersistentLogin from './components/PersistentLogin'
 function App() {
  
 
@@ -21,9 +22,14 @@ function App() {
       <Route path="linkpage" element={<LinkPage/>}/>
     
     {/* Protected Route*/}
+    <Route element={<PersistentLogin/>}>
+
     <Route element={<RequireAuth/>}>
        <Route path="tasks" element={<Tasks/>}/>
     </Route>
+    
+    </Route>
+    
 
       {/* Error route */}
       <Route path="*" element={<Missing/>}/>

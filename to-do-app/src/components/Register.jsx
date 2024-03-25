@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {useRef, useState, useEffect} from 'react'
 import axios from '../api/axios'
 
-//import {faCheck} from "@fontawesome/free-solid-svg-icons"
+//import {faCheck, faTimes, faInfoCircle} from "@fontawesome/free-solid-svg-icons"
 //import {FontAwesomeIcon} from "@fontawesome/react-fontawesome";
 
 //Havent installed style dependencies, FontAwesome its servers down
@@ -15,8 +15,11 @@ const pwdRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const registerUrl = './register'
 
 const Register = ()=>{
+    const userNameRef = useRef();
     const userRef = useRef() //user input
     const errRef = useRef() //user error
+
+    //const [userName, setUSerName]=useState('');
 
     const [user,setUser]= useState('');
     const [validName, setValidName] = useState(false);
@@ -114,23 +117,52 @@ const Register = ()=>{
         <section>
             <p ref={errRef} className={errMsg ? 'errmsg' : "offscreen"} 
             aria-live="assertive">{errMsg}</p>
+
             <h1>Register</h1>
             <form onSubmit={handleSubmit}>
-                <label htmlFor="username">
+
+            <label htmlFor="name">
                     Username:
-                  {/*}  <span className={validName ? "valid":"hide"}>
+                  {/*
+                    <span className={validName ? "valid":"hide"}>
                         <FontAwesomeIcon icon={faCheck} />
                     </span>
 
                     <span className={validName || !user ? "hide" : "invalid"}>
                         <FontAwesomeIcon icon={faTimes }/>
                     </span>
-                    {*/}
+                   
+                  */} 
 
                     </label>
                 <input
                     type="text"
-                    id="username"
+                    id="name"
+                    ref={userNameRef}
+                    autoComplete='on'
+                    required
+                    onFocus={()=> setUserFocus(true)}
+                    onBlur={()=> setUserFocus(false)}
+                />
+
+                <label htmlFor="email">
+                    Email:
+                    {/**
+                     *  <span className={validName ? "valid":"hide"}>
+                        <FontAwesomeIcon icon={faCheck} />
+                    </span>
+
+                    <span className={validName || !user ? "hide" : "invalid"}>
+                        <FontAwesomeIcon icon={faTimes }/>
+                    </span>
+                     */}
+                   
+                    
+
+                    </label>
+                <input
+                    type="text"
+                    id="email"
                     ref={userRef}
                     autoComplete='off'
                     onChange={(e)=> setUser(e.target.value)}
@@ -141,7 +173,7 @@ const Register = ()=>{
                     onBlur={()=> setUserFocus(false)}
                 />
                 <p id="uidnote" classsName={userFocus && user && !validName ? "instructions" : "offscreen"}>
-                    {/*}<FontAwesomeIcon icon={faInfoCircle} />{*/}
+                  {/*<FontAwesomeIcon icon={faInfoCircle} />*/}
                     4 a 24 characteres. <br />
                     Debe comenzar con una letra <br/>
                     Letras, numeros, guiones bajos y guiones permitidos y arroba
@@ -150,10 +182,10 @@ const Register = ()=>{
                 <label htmlFor='password'>
                     Password:
                     <span className={validPwd ? "valid" :"hide"}>
-                         {/*} <FontAwesomeIcon icon={faCheck} />  {*/}
+                       {/** <FontAwesomeIcon icon={faCheck} />   */} 
                     </span>
                     <span className={validPwd || !pwd ? "hide" : "invalid"}>
-                      {/*}  <FontAwesomeIcon icon={faTimes} /> {*/}
+                       {/**  <FontAwesomeIcon icon={faTimes} />  */}
                     </span>
                 </label>
                 <input  
@@ -167,7 +199,7 @@ const Register = ()=>{
                     onBlur = {() => setPwdFocus(false)}
                     />
                 <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-                    {/*}<FontAwesomeIcon icon={faInfoCircle}/>{*/}
+                   {/** <FontAwesomeIcon icon={faInfoCircle}/>*/} 
                     8 to 24 characters <br />
                     Debe incluir Mayuscula y minusculas, un numero y un caracter especial <br />
                     Caracteres permitidos:
@@ -181,11 +213,11 @@ const Register = ()=>{
                 <label htmlFor="confirm_pwd">
                     Confirm password:
                     <span className={validMatch && matchPwd ? "valid" :"hide"}>
-                       {/*} <FontAwesomeIcon icon={faCheck} /> {*/}
+                    {/** <FontAwesomeIcon icon={faCheck} /> */}  
                     </span>
 
                     <span className={validMatch || !matchPwd ? "hide": "invalid"}>
-                      {/*}  <FontAwesomeIcon icon={faTimes}/>{*/}
+                       {/** <FontAwesomeIcon icon={faTimes}/>*/} 
                     </span>
                 </label>
                 <input
