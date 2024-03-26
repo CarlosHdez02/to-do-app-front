@@ -1,24 +1,19 @@
-import {useRef, useState, useEffect} from 'react'
-import axios from '../api/axios'
+import { useRef, useState, useEffect } from 'react';
+import axios from '../api/axios';
 
-
-//Add connection to backend
-
-//letters a/A to-zZ, -_ and length 4-24 added the @ in user
 const userRegx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const pwdRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const registerUrl = './register'
 
-const Register = ()=>{
+const registerUrl = './register';
+
+const Register = () => {
     const userNameRef = useRef();
-    const userRef = useRef() //user input
-    const errRef = useRef() //user error
+    const userRef = useRef();
+    const errRef = useRef();
 
-    //const [userName, setUSerName]=useState('');
-
-    const [user,setUser]= useState('');
+    const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
-    const [userFocus,setUserFocus] = useState(false)
+    const [userFocus, setUserFocus] = useState(false);
 
     const [pwd, setPwd] = useState('');
     const [validPwd, setValidPwd] = useState(false);
@@ -31,198 +26,161 @@ const Register = ()=>{
     const [errMsg, setErrMsg] = useState('');
     const [success, setSuccess] = useState(false);
 
-    useEffect( ()=>{
-        userRef.current.focus()
-    },[])
+    useEffect(() => {
+        userRef.current.focus();
+    }, []);
 
-    useEffect( ()=>{
-        const result = userRegx.test(user)
-        
-        console.log(user)
-        console.log(result)
+    useEffect(() => {
+        const result = userRegx.test(user);
         setValidName(result);
-    }, [user])
+    }, [user]);
 
-    useEffect( ()=>{
+    useEffect(() => {
         const result = pwdRegx.test(pwd);
-        console.log(result)
-        console.log(pwd)
-        setValidPwd(result)
+        setValidPwd(result);
         const match = pwd === matchPwd;
-       
-        console.log(`pwd are ${pwd} ${matchPwd}`)
-        setValidMatch(match)
-        console.log(match);
-    }, [pwd, matchPwd])
+        setValidMatch(match);
+    }, [pwd, matchPwd]);
 
-    useEffect( ()=>{
+    useEffect(() => {
         setErrMsg('');
-    },[user,pwd,matchPwd])
+    }, [user, pwd, matchPwd]);
 
-    const handleSubmit = async (e)=>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        //if button was manipulated from devtools
-        const v1 = userRegx.test(user)
-        const v2 = pwdRegx.test(pwd)
-        if(!v1 || !v2){
-            setErrMsg('invalid entry');
+        const v1 = userRegx.test(user);
+        const v2 = pwdRegx.test(pwd);
+        if (!v1 || !v2) {
+            setErrMsg('Invalid entry');
             return;
         }
-        try{
-            const response = await axios.post(registerUrl,
-                // JSON.stringify({user:email,pwd:password}))
-                JSON.stringify({user,pwd}),{
-                    headers:{'Content-Type':'application/json'},
-                    withCredentials:true
-                }
-                
-            );
-               
-               console.log(response.data)
-               console.log(response.accessToken);
-               console.log(JSON.stringify(response));
-               setSuccess(true);
-               //Clear input fields
-               setValidName('')
-               setPwd('')
-               setMatchPwd('')
-        }catch(err){
-            if(!err?.response){
+        try {
+            const response = await axios.post(registerUrl, JSON.stringify({ user, pwd }), {
+                headers: { 'Content-Type': 'application/json' },
+                withCredentials: true
+            });
+            console.log(response.data);
+            console.log(response.accessToken);
+            console.log(JSON.stringify(response));
+            setSuccess(true);
+            setValidName('');
+            setPwd('');
+            setMatchPwd('');
+        } catch (err) {
+            if (!err?.response) {
                 setErrMsg('No server response');
-            }else if(err.response?.status === 409){
-                setErrMsg('UserName taken');
-            }else{
-                setErrMsg('Registration failed')
+            } else if (err.response?.status === 409) {
+                setErrMsg('Username taken');
+            } else {
+                setErrMsg('Registration failed');
             }
             errRef.current.focus();
         }
-    }
-    return(
-        <>
-       {success ? (
-            <section>
-                <h1>Sucess</h1>
-                <p>
-                    <a href="#">Sign in</a>
-                </p>
-            </section>
-       ): (
+    };
 
-   
-        <section>
-            <p ref={errRef} className={errMsg ? 'errmsg' : "offscreen"} 
-            aria-live="assertive">{errMsg}</p>
+    return (
+        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+            {success ? (
+                <section>
+                    <h1>Success</h1>
+                    <p>
+                        <a href="#">Sign in</a>
+                    </p>
+                </section>
+            ) : (
+                <section className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                    <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live="assertive">
+                        {errMsg}
+                    </p>
+                    <h1>Register</h1>
+                    <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center">
+                        <div className="flex flex-col pb-2">
+                            <label htmlFor="name">Username:</label>
+                            <input
+                                type="text"
+                                id="name"
+                                className="w-[327px] h-[40px] rounded-lg"
+                                ref={userNameRef}
+                                autoComplete="on"
+                                required
+                                onFocus={() => setUserFocus(true)}
+                                onBlur={() => setUserFocus(false)}
+                            />
+                        </div>
+                        <div className="flex flex-col pb-2">
+                            <label htmlFor="email">Email:</label>
+                            <input
+                                type="text"
+                                id="email"
+                                className="w-[327px] h-[40px] rounded-lg"
+                                ref={userRef}
+                                autoComplete="off"
+                                onChange={(e) => setUser(e.target.value)}
+                                required
+                                aria-invalid={validName ? 'false' : 'true'}
+                                aria-describedby="uidnote"
+                                onFocus={() => setUserFocus(true)}
+                                onBlur={() => setUserFocus(false)}
+                            />
+                            <p className={userFocus && user && !validName ? 'instructions' : 'offscreen'} id="uidnote">
+                                4 a 24 caracteres. <br />
+                                Debe comenzar con una letra. <br />
+                                Letras, números, guiones bajos y guiones permitidos, así como el símbolo de arroba.
+                            </p>
+                        </div>
+                        <div className="flex flex-col pb-2 ">
+                        <label htmlFor='password'>Password:</label>
+                            <input
+                                type="password"
+                                id="password"
+                                className="w-[327px] h-[40px] rounded-lg"
+                                onChange={(e) => setPwd(e.target.value)}
+                                required
+                                aria-invalid={validPwd ? 'false' : 'true'}
+                                aria-describedby='pwdnote'
+                                onFocus={() => setPwdFocus(true)}
+                                onBlur={() => setPwdFocus(false)}
+                            />
+                            <p className={pwdFocus && !validPwd ? 'instructions' : 'offscreen'} id="pwdnote">
+                                8 a 24 caracteres <br />
+                                Debe incluir mayúsculas y minúsculas, un número y un caracter especial <br />
+                                Caracteres permitidos: !, @, #, $, %
+                            </p>
+                        </div>
+                        <div className="flex flex-col pb-2">
+                            <label htmlFor="confirm_pwd">Confirm password:</label>
+                            <input
+                                type="password"
+                                id="confirm_pwd"
+                                className="w-[327px] h-[40px] rounded-lg"
+                                onChange={(e) => setMatchPwd(e.target.value)}
+                                required
+                                aria-invalid={validMatch ? 'false' : 'true'}
+                                aria-describedby='confirmnote'
+                                onFocus={() => setMatchFocus(true)}
+                                onBlur={() => setMatchFocus(false)}
+                            />
+                            <p className={matchFocus && !validMatch ? 'instructions' : 'offscreen'} id="confirmnote">
+                                Ambas contraseñas deben coincidir
+                            </p>
+                        </div>
+                        <button
+                        disabled={!validName || !validPwd || !validMatch} className="w-[327px] h-[40px] rounded-lg bg-blue-500 text-white hover:bg-blue-700">
+                            Sign up
+                        </button>
+                    </form>
+                    <p>
+                        Registrado?
+                        <br />
+                        <span className="line">
+                            <a href="/login">Iniciar sesión</a>
+                        </span>
+                    </p>
+                </section>
+            )}
+        </div>
+    );
+};
 
-            <h1>Register</h1>
-            <form onSubmit={handleSubmit}>
-
-            <label htmlFor="name">
-                    Username:
-                    </label>
-                <input
-                    type="text"
-                    id="name"
-                    ref={userNameRef}
-                    autoComplete='on'
-                    required
-                    onFocus={()=> setUserFocus(true)}
-                    onBlur={()=> setUserFocus(false)}
-                />
-
-                <label htmlFor="email">
-                    Email:
-                    </label>
-                <input
-                    type="text"
-                    id="email"
-                    ref={userRef}
-                    autoComplete='off'
-                    onChange={(e)=> setUser(e.target.value)}
-                    required
-                    aria-invalid={validName ? "false" : "true"}
-                    aria-describedby="uidnote"
-                    onFocus={()=> setUserFocus(true)}
-                    onBlur={()=> setUserFocus(false)}
-                />
-                <p id="uidnote" classsName={userFocus && user && !validName ? "instructions" : "offscreen"}>
-               
-                    4 a 24 characteres. <br />
-                    Debe comenzar con una letra <br/>
-                    Letras, numeros, guiones bajos y guiones permitidos y arroba
-                </p>
-                
-                <label htmlFor='password'>
-                    Password:
-                    <span className={validPwd ? "valid" :"hide"}>
-                    
-                    </span>
-                    <span className={validPwd || !pwd ? "hide" : "invalid"}>
-                  
-                    </span>
-                </label>
-                <input  
-                    type="password"
-                    id="password"
-                    onChange = {(e)=> setPwd(e.target.value)}
-                    required
-                    aria-invalid={validPwd ? "false" : "true"}
-                    aria-describedby='pwdnote'
-                    onFocus = {()=> setPwdFocus(true)}
-                    onBlur = {() => setPwdFocus(false)}
-                    />
-                <p id="pwdnote" className={pwdFocus && !validPwd ? "instructions" : "offscreen"}>
-                
-                    8 to 24 characters <br />
-                    Debe incluir Mayuscula y minusculas, un numero y un caracter especial <br />
-                    Caracteres permitidos:
-                    <span aria-label="exclamation mark">!</span>
-                    <span aria-label="at symbol">@</span>
-                    <span aria-label="hashtag">#</span>
-                    <span aria-label="dollar sign">$</span>
-                    <span aria-label="percent">%</span>
-                </p>
-
-                <label htmlFor="confirm_pwd">
-                    Confirm password:
-                    <span className={validMatch && matchPwd ? "valid" :"hide"}>
-                 
-                    </span>
-
-                    <span className={validMatch || !matchPwd ? "hide": "invalid"}>
-                  
-                    </span>
-                </label>
-                <input
-                    type="password"
-                    id="confirm_pwd"
-                    onChange = {(e)=> setMatchPwd(e.target.value)}
-                    required
-                    aria-invalid={validMatch ? "false" : "true"}
-                    aria-describedby='confirmnote'
-                    onFocus = {()=> setMatchFocus(true)}
-                    onBlur = {()=>setMatchFocus(false)}
-                    />
-                <p id="confirmnote" className={matchFocus && !validMatch ? "instructions": "offscreen"} >
-  
-                    Both passwords must match
-                </p>
-
-                <button 
-                    disabled={!validName || !validPwd || !validMatch ? true : false}>
-                        Sign up
-                    </button>
-            </form>
-
-            <p>
-                Registrado?<br />
-                <span className="line">
-                    {/*}Router Link {*/}
-                    <a href="/login">Iniciar sesion</a>
-                </span>
-            </p>
-        </section>
-        )}
-        </>
-    )
-}
 export default Register;
+                 
