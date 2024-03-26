@@ -79,7 +79,7 @@ const Register = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className=" bg-custom-background  flex justify-center items-center min-h-screen">
             {success ? (
                 <section>
                     <h1>Success</h1>
@@ -88,17 +88,18 @@ const Register = () => {
                     </p>
                 </section>
             ) : (
-                <section className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <section className=" rounded px-8 pt-6 pb-8 mb-4">
                     <p ref={errRef} className={errMsg ? 'errmsg' : 'offscreen'} aria-live="assertive">
                         {errMsg}
                     </p>
-                    <h1>Register</h1>
+                    <h1 class="text-white">Register</h1>
                     <form onSubmit={handleSubmit} className="flex flex-col justify-center items-center">
                         <div className="flex flex-col pb-2">
-                            <label htmlFor="name">Username:</label>
+                            <label htmlFor="name" className="text-white" >Username:</label>
                             <input
                                 type="text"
                                 id="name"
+                                placeholder="Nombre de usuario"
                                 className="w-[327px] h-[40px] rounded-lg"
                                 ref={userNameRef}
                                 autoComplete="on"
@@ -107,11 +108,12 @@ const Register = () => {
                                 onBlur={() => setUserFocus(false)}
                             />
                         </div>
-                        <div className="flex flex-col pb-2">
-                            <label htmlFor="email">Email:</label>
+                        <div className="flex flex-col justify-center items-center pb-2">
+                            <label htmlFor="email" className="text-white">Email:</label>
                             <input
                                 type="text"
                                 id="email"
+                                placeholder="micorreo@algo.com"
                                 className="w-[327px] h-[40px] rounded-lg"
                                 ref={userRef}
                                 autoComplete="off"
@@ -122,17 +124,18 @@ const Register = () => {
                                 onFocus={() => setUserFocus(true)}
                                 onBlur={() => setUserFocus(false)}
                             />
-                            <p className={userFocus && user && !validName ? 'instructions' : 'offscreen'} id="uidnote">
+                            <p className="text-white">
                                 4 a 24 caracteres. <br />
                                 Debe comenzar con una letra. <br />
                                 Letras, números, guiones bajos y guiones permitidos, así como el símbolo de arroba.
                             </p>
                         </div>
-                        <div className="flex flex-col pb-2 ">
-                        <label htmlFor='password'>Password:</label>
+                        <div className=" flex flex-col justify-center items-center pb-2">
+                        <label htmlFor='password' className="text-white" >Password:</label>
                             <input
                                 type="password"
                                 id="password"
+                                placeholder="********"
                                 className="w-[327px] h-[40px] rounded-lg"
                                 onChange={(e) => setPwd(e.target.value)}
                                 required
@@ -141,17 +144,18 @@ const Register = () => {
                                 onFocus={() => setPwdFocus(true)}
                                 onBlur={() => setPwdFocus(false)}
                             />
-                            <p className={pwdFocus && !validPwd ? 'instructions' : 'offscreen'} id="pwdnote">
+                            <p className="text-gray-300 flex flex-col justify-center items-center">
                                 8 a 24 caracteres <br />
                                 Debe incluir mayúsculas y minúsculas, un número y un caracter especial <br />
                                 Caracteres permitidos: !, @, #, $, %
                             </p>
                         </div>
-                        <div className="flex flex-col pb-2">
-                            <label htmlFor="confirm_pwd">Confirm password:</label>
+                        <div className=" flex flex-col justify-center items-center pb-2">
+                            <label htmlFor="confirm_pwd" className="text-white" >Confirm password:</label>
                             <input
                                 type="password"
                                 id="confirm_pwd"
+                                placeholder="********"
                                 className="w-[327px] h-[40px] rounded-lg"
                                 onChange={(e) => setMatchPwd(e.target.value)}
                                 required
@@ -160,20 +164,22 @@ const Register = () => {
                                 onFocus={() => setMatchFocus(true)}
                                 onBlur={() => setMatchFocus(false)}
                             />
-                            <p className={matchFocus && !validMatch ? 'instructions' : 'offscreen'} id="confirmnote">
+                            <p className="text-white">
                                 Ambas contraseñas deben coincidir
                             </p>
                         </div>
                         <button
-                        disabled={!validName || !validPwd || !validMatch} className="w-[327px] h-[40px] rounded-lg bg-blue-500 text-white hover:bg-blue-700">
+                        disabled={!validName || !validPwd || !validMatch} className="w-[327px] h-[40px] rounded-lg bg-gray-500 text-white ">
                             Sign up
                         </button>
                     </form>
-                    <p>
+                    <p className='text-white'>
                         Registrado?
                         <br />
-                        <span className="line">
-                            <a href="/login">Iniciar sesión</a>
+                        <span >
+                            <a href="/login"
+                            className="text-white"
+                            >Iniciar sesión</a>
                         </span>
                     </p>
                 </section>

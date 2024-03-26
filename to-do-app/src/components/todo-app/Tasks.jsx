@@ -9,6 +9,7 @@ export default function Tasks({ tasks, onAdd, onDelete }) {
             if (prevCompletedTasks.includes(taskId)) {
                 return prevCompletedTasks.filter((id) => id !== taskId);
             } else {
+                console.log('hi')
                 return [...prevCompletedTasks, taskId];
             }
         });

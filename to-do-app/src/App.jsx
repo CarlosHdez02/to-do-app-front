@@ -1,4 +1,5 @@
 import './App.css'
+//Registration and login components
 import Register from './components/Register'
 import Login from './components/Login'
 import {Routes, Route} from 'react-router-dom'
@@ -9,6 +10,7 @@ import Missing from './components/Missing'
 import RequireAuth from './components/RequiredAuth'
 import PersistentLogin from './components/PersistentLogin'
 
+//todo-app components
 import ProjectsSideBar from './components/todo-app/ProjectsSideBar'
 import Input from './components/todo-app/Input'
 import NoProjectSelected from './components/todo-app/NoProjectSelected'

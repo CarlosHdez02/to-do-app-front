@@ -69,15 +69,21 @@ const Login = ()=>{
     }
     return(
         <>
-        
-        <section>
+        <div className=" bg-custom-background flex justify-center items-center ">
+        <section className="rounded px-8 pt-6 pb-8 mb-4">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}
                 aria-live="assertive">{errMsg}</p>
-                <h1>Iniciar Sesion</h1>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor='username'>Username:</label>
+                <h1 className='text-white'>Iniciar Sesion</h1>
+                <form 
+                className="flex flex-col justify-center items-center"
+                onSubmit={handleSubmit}>
+                    <div className="flex flex-col pb-2">
+                    <label htmlFor='username' className='text-white'>Email:</label>
+
                     <input 
                         type="text" 
+                        placeholder="correo@algo.com"
+                        className="w-[327px] h-[40px] rounded-lg"
                         id="username"
                         ref={userRef}
                         autoComplete="off"
@@ -85,24 +91,36 @@ const Login = ()=>{
                         value={user}
                         required
                         />
-                    <label htmlFor="password">Password:</label>
+                    </div>
+
+                    <div className="flex flex-col pb-2">
+
+                    <label htmlFor="password" className='text-white'>Password:</label>
                     <input 
                         type="password"
+                        placeholder="********"
+                        className="w-[327px] h-[40px] rounded-lg"
                         id="password"
                         onChange = {(e)=>setPwd(e.target.value)}
                         value={pwd}
                         required
                     />
-                    <button>Iniciar sesion</button>
+                    </div>
+                    
+                    <button className="w-[327px] h-[40px] rounded-lg bg-gray-500 text-white ">Iniciar sesion</button>
                 </form>
-                <p>
-                    Necesitas una cuenta? <br />
-                    <span className='line'>
+                <p class="text-white"> Necesitas una cuenta?  </p> 
+                
+                <br />
+                    <span className='text-white'>
                         {/*} React router link{*/}
                         <a href="/register">Crear cuenta</a>
                     </span>
-                </p>
+               
         </section>
+        </div>
+        
+        
         </>
     )
 }
