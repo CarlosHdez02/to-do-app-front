@@ -15,7 +15,7 @@ export default function SelectedProject({project, onDelete, onAddTask, onDeleteT
 
         <button 
         onClick={onDelete}
-        className="text-stone-600 hover:text-stone-950">Delete</button>
+        className="hover:text-red-500">Delete</button>
         </div>
        <p className="mb-4 text-stone-400">{formattedDate}</p>
        <p className="text-stone-600 whitespace-pre-wrap">{project.description}</p>

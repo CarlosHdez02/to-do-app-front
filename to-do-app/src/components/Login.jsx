@@ -73,12 +73,12 @@ const Login = ()=>{
         <section className="rounded px-8 pt-6 pb-8 mb-4">
             <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"}
                 aria-live="assertive">{errMsg}</p>
-                <h1 className='text-white'>Iniciar Sesion</h1>
+                <h1 >Iniciar Sesion</h1>
                 <form 
                 className="flex flex-col justify-center items-center"
                 onSubmit={handleSubmit}>
                     <div className="flex flex-col pb-2">
-                    <label htmlFor='username' className='text-white'>Email:</label>
+                    <label htmlFor='username'>Email:</label>
 
                     <input 
                         type="text" 
@@ -95,7 +95,7 @@ const Login = ()=>{
 
                     <div className="flex flex-col pb-2">
 
-                    <label htmlFor="password" className='text-white'>Password:</label>
+                    <label htmlFor="password" >Password:</label>
                     <input 
                         type="password"
                         placeholder="********"
@@ -109,10 +109,10 @@ const Login = ()=>{
                     
                     <button className="w-[327px] h-[40px] rounded-lg bg-gray-500 text-white ">Iniciar sesion</button>
                 </form>
-                <p class="text-white"> Necesitas una cuenta?  </p> 
+                <p > Necesitas una cuenta?  </p> 
                 
                 <br />
-                    <span className='text-white'>
+                    <span >
                         {/*} React router link{*/}
                         <a href="/register">Crear cuenta</a>
                     </span>

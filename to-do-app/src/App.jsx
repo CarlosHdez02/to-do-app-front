@@ -4,7 +4,6 @@ import Register from './components/Register'
 import Login from './components/Login'
 import {Routes, Route} from 'react-router-dom'
 import LinkPage from './components/LinkPage'
-import Tasks from './components/Tasks'
 import Layout from './components/Layout'
 import Missing from './components/Missing'
 import RequireAuth from './components/RequiredAuth'
@@ -140,28 +139,20 @@ if(projectState.selectedProjectId ===null){
       <Route path="register" element={<Register/>}/>
       <Route path="linkpage" element={<LinkPage/>}/>
 
-      <Route path="input" element={<Input/>}/>
+    
       <Route path="tasks" element={<ProjectsSideBar/>}/>
     
     
     {/* Protected Route*/}
     <Route element={<PersistentLogin/>}>
-
-
-
-    <Route element={<RequireAuth/>}>
-     
-     
-  
-    </Route>
+   
+     <Route element={<RequireAuth/>}>
+        <Route path="input" element={<Input/>}/>
+     </Route>
 
     </Route>
-    
-
       {/* Error route */}
-      <Route path="*" element={<Missing/>}/>
-
-      </Route>
+      <Route path="*" element={<Missing/>}/> </Route>
      </Routes>
     </>
   )
