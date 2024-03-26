@@ -4,12 +4,13 @@ export default function NewTask({onAdd}){
     const [enteredTask, setEnteredTask] = useState('');
 
     function handleChange(event){
-        if(enteredTask.trim()===''){
-            return;
-        }
+        
         setEnteredTask(event.target.value)
     }
     function handleClick(){
+        if(enteredTask.trim()===''){
+            return;
+        }
         onAdd(enteredTask);
         setEnteredTask('');
     }
