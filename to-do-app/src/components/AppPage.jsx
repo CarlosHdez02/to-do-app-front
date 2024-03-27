@@ -122,7 +122,7 @@ const AppPage = () => {
     };
   
     return (
-      <>
+      <div className="flex">
       {/**Always showing the layout */}
         <Layout
           projects={projectState.projects}
@@ -132,7 +132,7 @@ const AppPage = () => {
         >
           {getComponent(projectState.selectedProjectId)}
         </Layout>
-      </>
+      </div>
     );
   };
 
