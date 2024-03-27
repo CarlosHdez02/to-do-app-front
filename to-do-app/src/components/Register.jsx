@@ -1,15 +1,19 @@
 import { useRef, useState, useEffect } from 'react';
+import {useNavigate } from 'react-router-dom';
 import axios from '../api/axios';
 
 const userRegx = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const pwdRegx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 
-const registerUrl = './register';
+const registerUrl = 'http://localhost:3000/api/v1/auth/register';
 
 const Register = () => {
     const userNameRef = useRef();
+
     const userRef = useRef();
     const errRef = useRef();
+
+    const [userName, setUserName] = useState('')
 
     const [user, setUser] = useState('');
     const [validName, setValidName] = useState(false);
@@ -55,7 +59,7 @@ const Register = () => {
             return;
         }
         try {
-            const response = await axios.post(registerUrl, JSON.stringify({ user, pwd }), {
+            const response = await axios.post(registerUrl, JSON.stringify({userName, user, pwd }), {
                 headers: { 'Content-Type': 'application/json' },
                 withCredentials: true
             });
@@ -68,7 +72,7 @@ const Register = () => {
             setMatchPwd('');
         } catch (err) {
             if (!err?.response) {
-                setErrMsg('No server response');
+                setErrMsg('No server response, verifica que esté apuntando al puerto correcto');
             } else if (err.response?.status === 409) {
                 setErrMsg('Username taken');
             } else {
@@ -77,9 +81,12 @@ const Register = () => {
             errRef.current.focus();
         }
     };
-
+    const navigate = useNavigate()
+    const pageHandler = ()=>{
+        navigate('/app')
+    }
     return (
-        <div className=" bg-custom-background  flex justify-center items-center min-h-screen">
+        <div className="  flex justify-center items-center min-h-screen">
             {success ? (
                 <section>
                     <h1>Success</h1>
@@ -100,8 +107,9 @@ const Register = () => {
                                 type="text"
                                 id="name"
                                 placeholder="Nombre de usuario"
-                                className="w-[327px] h-[40px] rounded-lg"
+                                className=" w-[327px] h-[40px] rounded-lg  border border-blue-500"
                                 ref={userNameRef}
+                                onChange={(e) => setUserName(e.target.value)}
                                 autoComplete="on"
                                 required
                                 onFocus={() => setUserFocus(true)}
@@ -114,7 +122,7 @@ const Register = () => {
                                 type="text"
                                 id="email"
                                 placeholder="micorreo@algo.com"
-                                className="w-[327px] h-[40px] rounded-lg"
+                                className="w-[327px] h-[40px] rounded-lg border border-blue-500"
                                 ref={userRef}
                                 autoComplete="off"
                                 onChange={(e) => setUser(e.target.value)}
@@ -136,7 +144,7 @@ const Register = () => {
                                 type="password"
                                 id="password"
                                 placeholder="********"
-                                className="w-[327px] h-[40px] rounded-lg"
+                                className="w-[327px] h-[40px] rounded-lg border border-blue-500"
                                 onChange={(e) => setPwd(e.target.value)}
                                 required
                                 aria-invalid={validPwd ? 'false' : 'true'}
@@ -156,7 +164,7 @@ const Register = () => {
                                 type="password"
                                 id="confirm_pwd"
                                 placeholder="********"
-                                className="w-[327px] h-[40px] rounded-lg"
+                                className="w-[327px] h-[40px] rounded-lg border border-blue-500"
                                 onChange={(e) => setMatchPwd(e.target.value)}
                                 required
                                 aria-invalid={validMatch ? 'false' : 'true'}
@@ -169,7 +177,8 @@ const Register = () => {
                             </p>
                         </div>
                         <button
-                        disabled={!validName || !validPwd || !validMatch} className="w-[327px] h-[40px] rounded-lg bg-gray-500">
+                            onClick={pageHandler}
+                            disabled={!validName || !validPwd || !validMatch} className="w-[327px] h-[40px] rounded-lg bg-gray-500">
                             
                             Sign up
                         </button>

@@ -25,6 +25,8 @@ const NewProject = ({onAdd, onCancel})=>{
             dueDate: enteredDueDate
         })
     }
+   
+
     return(
         <>
     <Modal ref={modal} buttonCaption="Close">

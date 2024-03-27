@@ -1,14 +1,18 @@
-import { Outlet} from "react-router-dom";
 import Register from "./Register";
+import ProjectsSideBar from "./todo-app/ProjectsSideBar";
 
-const Layout = ()=>{
-    return(
-        <main className="">
-            {/*}All the children of layout component{*/}
-          
-            
-            <Outlet />
-        </main>
-    )
-}
+const Layout = (props) => {
+    console.log(props)
+  return (
+    <main className="">
+      <ProjectsSideBar
+        projects={props.projects}
+        onSelectProject={props.onSelectProject}
+        selectedProjectId={props.selectedProjectId}
+        onStartAddProject={props.onStartAddProject}
+      />
+      {props.children}
+    </main>
+  );
+};
 export default Layout;
